@@ -5,7 +5,6 @@ import numpy as np
 import pybullet as p
 import pybullet_data
 from gymnasium import spaces
-from ray.rllib.env.multi_agent_env import MultiAgentEnv
 
 from rcjs_unit import Unit
 
