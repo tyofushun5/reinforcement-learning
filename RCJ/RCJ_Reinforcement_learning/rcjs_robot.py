@@ -30,60 +30,60 @@ class Agent(Robot):
         vector_y = magnitude * math.sin(angle_rad)
         return vector_x, vector_y
 
-    # def create(self):
-    #      """アタッカーを生成
-    #      オブジェクト設定"""
-    #      attacker = p.createCollisionShape(
-    #          shapeType=p.GEOM_MESH,
-    #          fileName="RCJ_STL_data/robot.stl",
-    #          meshScale=[0.001, 0.001, 0.001]
-    #      )
-    #      #外観設定
-    #      attacker_visual = p.createVisualShape(
-    #          shapeType=p.GEOM_MESH,
-    #          fileName="RCJ_STL_data/robot.stl",
-    #          meshScale=[0.001, 0.001, 0.001],
-    #          rgbaColor=[0.2, 0.2, 0.2, 1] #黒色
-    #      )
-    #      # 動的ボディとしてオブジェクトを作成
-    #      attacker_id = p.createMultiBody(
-    #          baseMass=1.4,
-    #          baseCollisionShapeIndex=attacker,
-    #          baseVisualShapeIndex=attacker_visual,
-    #          basePosition=[1+self.cp[0], 1+self.cp[1], 0.1+self.cp[2]],
-    #          baseOrientation = p.getQuaternionFromEuler([0, 0, 0])
-    #      )
-    #      return attacker_id
-
     def create(self):
-        # 円柱のパラメータ設定
-        radius = 0.11  # 半径（メートル）
-        height = 0.11  # 高さ（メートル）
-        mass = 1.4  # 質量（キログラム）
+         """アタッカーを生成
+         オブジェクト設定"""
+         attacker = p.createCollisionShape(
+             shapeType=p.GEOM_MESH,
+             fileName="RCJ_STL_data/real_robot.stl",
+             meshScale=[0.001, 0.001, 0.001]
+         )
+         #外観設定
+         attacker_visual = p.createVisualShape(
+             shapeType=p.GEOM_MESH,
+             fileName="RCJ_STL_data/real_robot.stl",
+             meshScale=[0.001, 0.001, 0.001],
+             rgbaColor=[0.2, 0.2, 0.2, 1] #黒色
+         )
+         # 動的ボディとしてオブジェクトを作成
+         attacker_id = p.createMultiBody(
+             baseMass=1.4,
+             baseCollisionShapeIndex=attacker,
+             baseVisualShapeIndex=attacker_visual,
+             basePosition=[1+self.cp[0], 1+self.cp[1], 0.1+self.cp[2]],
+             baseOrientation = p.getQuaternionFromEuler([math.pi/2, 0, math.pi])
+         )
+         return attacker_id
 
-        # 円柱の衝突形状を作成
-        collisionShapeId = p.createCollisionShape(
-            shapeType=p.GEOM_CYLINDER,
-            radius=radius,
-            height=height
-        )
-
-        # 円柱の視覚形状を作成
-        visualShapeId = p.createVisualShape(
-            shapeType=p.GEOM_CYLINDER,
-            radius=radius,
-            length=height,
-            rgbaColor=[0.2, 0.2, 0.2, 1]  # 赤色（R, G, B, α）
-        )
-
-        # 円柱のマルチボディを作成
-        attacker_id = p.createMultiBody(
-            baseMass=mass,
-            baseCollisionShapeIndex=collisionShapeId,
-            baseVisualShapeIndex=visualShapeId,
-            basePosition=self.start_pos
-        )
-        return attacker_id
+    # def create(self):
+    #     # 円柱のパラメータ設定
+    #     radius = 0.11  # 半径（メートル）
+    #     height = 0.11  # 高さ（メートル）
+    #     mass = 1.4  # 質量（キログラム）
+    #
+    #     # 円柱の衝突形状を作成
+    #     collisionShapeId = p.createCollisionShape(
+    #         shapeType=p.GEOM_CYLINDER,
+    #         radius=radius,
+    #         height=height
+    #     )
+    #
+    #     # 円柱の視覚形状を作成
+    #     visualShapeId = p.createVisualShape(
+    #         shapeType=p.GEOM_CYLINDER,
+    #         radius=radius,
+    #         length=height,
+    #         rgbaColor=[0.2, 0.2, 0.2, 1]  # 赤色（R, G, B, α）
+    #     )
+    #
+    #     # 円柱のマルチボディを作成
+    #     attacker_id = p.createMultiBody(
+    #         baseMass=mass,
+    #         baseCollisionShapeIndex=collisionShapeId,
+    #         baseVisualShapeIndex=visualShapeId,
+    #         basePosition=self.start_pos
+    #     )
+    #     return attacker_id
 
     def action(self, robot_id, angle_deg=0, magnitude=1.0):
         """ロボットを動かす関数"""

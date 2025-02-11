@@ -1,14 +1,18 @@
+import math
+
 import gymnasium as gym
 import numpy as np
 import pybullet as p
 import pybullet_data
 from gymnasium import spaces
+from ray.rllib.env.multi_agent_env import MultiAgentEnv
+
 
 from rcjs_unit import Unit
 
 
 class Environment(gym.Env):
-    def __init__(self, create_position):
+    def __init__(self):
         super().__init__()
         # PyBulletの初期化
         self.physicsClient = p.connect(p.GUI)
@@ -21,7 +25,7 @@ class Environment(gym.Env):
                                             shape=(3,),
                                             dtype=np.float32)
 
-        self.cp = create_position
+        self.cp = [0, 0, 0]
         self.detection_interval = 0
 
         self.unit = Unit()
@@ -39,6 +43,10 @@ class Environment(gym.Env):
                          magnitude=7.5)
         for _ in range(10):
             p.stepSimulation()
+
+        pos, _ = p.getBasePositionAndOrientation(self.unit.attacker_id)
+        fixed_ori = p.getQuaternionFromEuler([math.pi/2, 0, math.pi])  # 例：固定したい姿勢
+        p.resetBasePositionAndOrientation(self.unit.attacker_id, pos, fixed_ori)
 
         self.step_count += 1
 
@@ -97,5 +105,6 @@ class Environment(gym.Env):
 
     def render(self):
         pass
+
     def close(self):
         p.disconnect()

@@ -3,7 +3,7 @@ import time
 import pybullet as p
 import pybullet_data
 
-from rcjs_unit import Unit
+from ..rcjs_unit import Unit
 
 
 # PyBulletの物理エンジンに接続

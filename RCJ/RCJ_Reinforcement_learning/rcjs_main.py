@@ -1,13 +1,22 @@
+import os
+
 from stable_baselines3 import PPO
 
 from rcjs_environment import Environment
 
-env = Environment([0, 0, 0])
+save_dir = "model"
+os.makedirs(save_dir, exist_ok=True)
 
-model = PPO("MlpPolicy", env, device="cuda", verbose=1)
+def main():
+    env = Environment()
 
-model.learn(total_timesteps=1000000)
+    model = PPO("MlpPolicy", env, device="cpu", verbose=1)
 
-model.save("RCJ_ppo_model")
+    model.learn(total_timesteps=1000000)
 
-env.close()
+    model.save(os.path.join(save_dir, "RCJ_ppo_model"))
+
+    env.close()
+
+if __name__ == "__main__":
+    main()
