@@ -35,13 +35,13 @@ class Agent(Robot):
          オブジェクト設定"""
          attacker = p.createCollisionShape(
              shapeType=p.GEOM_MESH,
-             fileName="RCJ_STL_data/real_robot.stl",
+             fileName="RCJ_STL_data/robot.stl",
              meshScale=[0.001, 0.001, 0.001]
          )
          #外観設定
          attacker_visual = p.createVisualShape(
              shapeType=p.GEOM_MESH,
-             fileName="RCJ_STL_data/real_robot.stl",
+             fileName="RCJ_STL_data/robot.stl",
              meshScale=[0.001, 0.001, 0.001],
              rgbaColor=[0.2, 0.2, 0.2, 1] #黒色
          )
@@ -51,7 +51,7 @@ class Agent(Robot):
              baseCollisionShapeIndex=attacker,
              baseVisualShapeIndex=attacker_visual,
              basePosition=[1+self.cp[0], 1+self.cp[1], 0.1+self.cp[2]],
-             baseOrientation = p.getQuaternionFromEuler([math.pi/2, 0, math.pi])
+             baseOrientation = p.getQuaternionFromEuler([0, 0, 0])
          )
          return attacker_id
 

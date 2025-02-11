@@ -10,9 +10,9 @@ os.makedirs(save_dir, exist_ok=True)
 def main():
     env = Environment()
 
-    model = PPO("MlpPolicy", env, device="cpu", verbose=1)
+    model = PPO("MlpPolicy", env, device="cuda", verbose=1)
 
-    model.learn(total_timesteps=1000000)
+    model.learn(total_timesteps=10000000)
 
     model.save(os.path.join(save_dir, "RCJ_ppo_model"))
 

@@ -7,7 +7,6 @@ import pybullet_data
 from gymnasium import spaces
 from ray.rllib.env.multi_agent_env import MultiAgentEnv
 
-
 from rcjs_unit import Unit
 
 
@@ -45,7 +44,7 @@ class Environment(gym.Env):
             p.stepSimulation()
 
         pos, _ = p.getBasePositionAndOrientation(self.unit.attacker_id)
-        fixed_ori = p.getQuaternionFromEuler([math.pi/2, 0, math.pi])  # 例：固定したい姿勢
+        fixed_ori = p.getQuaternionFromEuler([0, 0, 0])
         p.resetBasePositionAndOrientation(self.unit.attacker_id, pos, fixed_ori)
 
         self.step_count += 1
