@@ -40,14 +40,14 @@ class Court(object):
         """STLファイルから衝突形状を作成"""
         collision_court = p.createCollisionShape(
             shapeType=p.GEOM_MESH,
-            fileName="RCJ_STL_data/court.stl",
+            fileName="stl_data/court.stl",
             meshScale=[0.001, 0.001, 0.001],
             flags=p.GEOM_FORCE_CONCAVE_TRIMESH
         )
         """STLファイルから視覚形状を作成"""
         visual_court = p.createVisualShape(
             shapeType=p.GEOM_MESH,
-            fileName="RCJ_STL_data/court.stl",
+            fileName="stl_data/court.stl",
             meshScale=[0.001, 0.001, 0.001],
             rgbaColor=[1, 1, 1, 1]
         )

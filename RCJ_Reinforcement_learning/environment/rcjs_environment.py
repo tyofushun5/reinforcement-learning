@@ -1,12 +1,10 @@
-import math
-import random
 import gymnasium as gym
 import numpy as np
 import pybullet as p
 import pybullet_data
 from gymnasium import spaces
 
-from rcjs_unit import Unit
+from RCJ_Reinforcement_learning.tools.rcjs_unit import Unit
 
 
 class Environment(gym.Env):
@@ -38,7 +36,7 @@ class Environment(gym.Env):
     def step(self, action):
         self.unit.action(robot_id=self.unit.attacker_id,
                          angle_deg=action,
-                         magnitude=7.5)
+                         magnitude=6.0)
         for _ in range(10):
             p.stepSimulation()
 

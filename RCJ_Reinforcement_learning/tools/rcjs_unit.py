@@ -2,8 +2,8 @@ import math
 
 import pybullet as p
 
-from rcjs_court import Court
-from rcjs_robot import Agent
+from RCJ_Reinforcement_learning.tools.rcjs_court import Court
+from RCJ_Reinforcement_learning.tools.rcjs_robot import Agent
 
 
 class Unit(object):
