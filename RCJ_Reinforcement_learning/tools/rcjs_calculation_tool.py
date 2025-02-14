@@ -2,7 +2,7 @@ import math
 
 import pybullet as p
 
-class CalculationTools(object):
+class CalculationTool(object):
     def __init__(self):
         pass
 
@@ -55,7 +55,7 @@ class CalculationTools(object):
 
     @staticmethod
     def movement_reward_calculation(reward, pos, previous_pos, past_distance):
-        distance = CalculationTools.euclidean_distance_pos(pos, previous_pos)
+        distance = CalculationTool.euclidean_distance_pos(pos, previous_pos)
         if distance < past_distance:
             reward += 0.5
         else:
@@ -64,7 +64,7 @@ class CalculationTools(object):
 
     @staticmethod
     def distance_reward_calculation(reward, agent_pos, ball_pos, ball_past_distance):
-        distance = CalculationTools.euclidean_distance_pos(agent_pos, ball_pos)
+        distance = CalculationTool.euclidean_distance_pos(agent_pos, ball_pos)
         if distance < ball_past_distance:
             reward += 0.5
         else:

@@ -4,7 +4,9 @@ import pybullet as p
 import pybullet_data
 from gymnasium import spaces
 
-from RCJ_Reinforcement_learning.tools.rcjs_unit import Unit
+from ..tools.rcjs_unit import Unit
+from ..tools.rcjs_calculation_tool import CalculationTool
+from ..tools.rcjs_reward_calculation import FirstRewardCalculation
 
 
 class Environment(gym.Env):
@@ -25,6 +27,8 @@ class Environment(gym.Env):
         self.detection_interval = 0
 
         self.unit = Unit()
+        self.cal = CalculationTool()
+        self.reward_cal = FirstRewardCalculation()
         self.unit.create_unit(self.cp)
 
         self.hit_ids = []
@@ -48,17 +52,17 @@ class Environment(gym.Env):
 
         attacker_pos, _ = p.getBasePositionAndOrientation(self.unit.attacker_id)
 
-        ball_angle = self.unit.angle_calculation_id(self.unit.attacker_id,
+        ball_angle = self.cal.angle_calculation_id(self.unit.attacker_id,
                                                      self.unit.ball_id)
 
-        enemy_goal_angle = self.unit.angle_calculation_pos(attacker_pos,
+        enemy_goal_angle = self.cal.angle_calculation_pos(attacker_pos,
                                                            self.unit.court.enemy_goal_position)
 
-        my_goal_angle = self.unit.angle_calculation_pos(attacker_pos,
+        my_goal_angle = self.cal.angle_calculation_pos(attacker_pos,
                                                         self.unit.court.my_goal_position)
 
         self.hit_ids = self.unit.detection_line()
-        reward = self.unit.reward_calculation(self.hit_ids,
+        reward = self.reward_cal.reward_calculation(self.hit_ids,
                                               self.unit.attacker_id,
                                               self.unit.ball_id,
                                               self.step_count)

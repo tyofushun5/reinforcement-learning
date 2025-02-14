@@ -1,21 +1,23 @@
-import abc
-import math
-
 import pybullet as p
+from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTool
 
-class RewardCalculation(mataclass=abc.ABCMeta):
-    def __init__(self):
-        pass
 
-class FirstRewardCalculation(RewardCalculation):
+class FirstRewardCalculation(object):
     def __init__(self):
         super().__init__()
+        self.my_goal_line_idx = 6
+        self.enemy_goal_line_idx = 7
+        self.previous_attacker_pos = [0, 0, 0]
+        self.past_distance = 0
+        self.ball_past_distance = 0
+        self.is_goal = False
+        self.cal = CalculationTool()
 
     def reward_calculation(self, hit_ids, attacker_id, ball_id, step_count):
         reward = 0
         attacker_pos, _ = p.getBasePositionAndOrientation(attacker_id)
 
-        reward += self.movement_reward_calculation(reward,
+        reward += self.cal.movement_reward_calculation(reward,
                                                    attacker_pos,
                                                    self.previous_attacker_pos,
                                                    self.past_distance)
@@ -23,12 +25,12 @@ class FirstRewardCalculation(RewardCalculation):
 
         ball_pos, _ = p.getBasePositionAndOrientation(ball_id)
 
-        reward += self.distance_reward_calculation(reward,
+        reward += self.cal.distance_reward_calculation(reward,
                                                    attacker_pos,
                                                    ball_pos,
                                                    self.ball_past_distance)
 
-        self.ball_past_distance = self.euclidean_distance_pos(attacker_pos, ball_pos)
+        self.ball_past_distance = self.cal.euclidean_distance_pos(attacker_pos, ball_pos)
 
         is_touch = p.getContactPoints(ball_id, attacker_id)
         if is_touch:
@@ -41,7 +43,7 @@ class FirstRewardCalculation(RewardCalculation):
         for i in range(len(hit_ids)):
             if hit_ids[i] == attacker_id:
                 reward -= 0.2
-        angle = self.angle_calculation_id(attacker_id, ball_id)
+        angle = self.cal.angle_calculation_id(attacker_id, ball_id)
         if angle<=90 or angle>=270:
             reward += 0.1
         else:
