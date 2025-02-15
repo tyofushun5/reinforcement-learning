@@ -10,7 +10,12 @@ os.makedirs(save_dir, exist_ok=True)
 def main():
     env = Environment()
 
-    model = PPO("MlpPolicy", env, device="cuda", verbose=1)
+    model = PPO("MlpPolicy",
+                env,
+                device="cuda",
+                verbose=1,
+                n_steps=4096,
+                batch_size=256)
 
     model.learn(total_timesteps=1000000)
 
