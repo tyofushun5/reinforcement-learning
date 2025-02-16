@@ -63,3 +63,10 @@ class CalculationTool(object):
         else:
             reward -= 0.4
         return reward
+
+    @staticmethod
+    def vector_calculations(angle_deg, magnitude):
+        angle_rad = math.radians(angle_deg)
+        vector_x = magnitude * math.cos(angle_rad)
+        vector_y = magnitude * math.sin(angle_rad)
+        return vector_x, vector_y

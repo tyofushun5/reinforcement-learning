@@ -5,18 +5,7 @@ import pybullet as p
 from RCJ_Reinforcement_learning.tools.rcjs_court import Court
 from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTool
 
-class RewardCalculation(metaclass=abc.ABCMeta):
-
-    def __init__(self):
-        self.my_goal_line_idx = 6
-        self.enemy_goal_line_idx = 7
-        self.is_goal = False
-
-    @staticmethod
-    def reward_calculation(self, *args):
-        self.is_goal = False
-
-class FirstRewardCalculation():
+class FirstRewardCalculation(object):
     def __init__(self):
         super().__init__()
         self.my_goal_line_idx = 6
@@ -67,3 +56,39 @@ class FirstRewardCalculation():
         if angle<=45 or angle>=315:
             reward += 0.2
         return reward
+
+class SecondRewardCalculation(object):
+
+    def __init__(self):
+        pass
+
+    def reward_calculation(self):
+        pass
+
+class ThirdRewardCalculation(object):
+    def __init__(self):
+        pass
+
+    def reward_calculation(self):
+        pass
+
+class FourthRewardCalculation(object):
+    def __init__(self):
+        pass
+
+    def reward_calculation(self):
+        pass
+
+class FifthRewardCalculation(object):
+    def __init__(self):
+        pass
+
+    def reward_calculation(self):
+        pass
+
+class SixthRewardCalculation(object):
+    def __init__(self):
+        pass
+
+    def reward_calculation(self):
+        pass

@@ -145,7 +145,7 @@ class Court(object):
             baseMass=0.1,
             baseCollisionShapeIndex=collision_shape_id,
             baseVisualShapeIndex=visual_shape_id,
-            basePosition=[0.915+self.cp[0], 1.21+self.cp[1], 0.1+self.cp[2]]
+            basePosition=[0.915+self.cp[0], 1.8+self.cp[1], 0.1+self.cp[2]]
         )
         return ball_id
 

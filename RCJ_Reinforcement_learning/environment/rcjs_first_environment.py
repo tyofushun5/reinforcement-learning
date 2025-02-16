@@ -5,9 +5,9 @@ import pybullet as p
 import pybullet_data
 from gymnasium import spaces
 
-from ..tools.rcjs_unit import Unit
-from ..tools.rcjs_calculation_tool import CalculationTool
-from ..tools.rcjs_reward_calculation import FirstRewardCalculation
+from RCJ_Reinforcement_learning.tools.rcjs_unit import Unit
+from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTool
+from RCJ_Reinforcement_learning.tools.rcjs_reward_calculation import FirstRewardCalculation
 
 
 class Environment(gym.Env):
@@ -99,8 +99,8 @@ class Environment(gym.Env):
         if seed is not None:
             np.random.seed(seed)
 
-        self.agent_random_pos[0] = random.uniform(0.5, 1.5)
-        self.agent_random_pos[1] = random.uniform(0.5, 1)
+        self.agent_random_pos[0] = random.uniform(0.4, 1.5)
+        self.agent_random_pos[1] = random.uniform(0.4, 1.5)
 
         self.unit = Unit()
         self.unit.create_unit(self.cp, self.agent_random_pos)

@@ -2,7 +2,7 @@ import os
 
 from stable_baselines3 import PPO
 
-from RCJ_Reinforcement_learning.environment.rcjs_environment import Environment
+from RCJ_Reinforcement_learning.environment.rcjs_first_environment import Environment
 
 save_dir = "model"
 os.makedirs(save_dir, exist_ok=True)

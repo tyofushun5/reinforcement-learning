@@ -3,6 +3,7 @@ import math
 
 import pybullet as p
 
+from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTool
 
 class Robot(metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -21,16 +22,10 @@ class Robot(metaclass=abc.ABCMeta):
 class Agent(Robot):
     def __init__(self, create_position):
         super().__init__()
+        self.cal = CalculationTool()
         self.cp = create_position
         self.start_pos = [1+self.cp[0], 0.5+self.cp[1], 0.1+self.cp[2]]
         self.base_position = self.start_pos
-
-    @staticmethod
-    def vector_calculations(angle_deg, magnitude=7.0):
-        angle_rad = math.radians(angle_deg)
-        vector_x = magnitude * math.cos(angle_rad)
-        vector_y = magnitude * math.sin(angle_rad)
-        return vector_x, vector_y
 
     # def create(self):
     #      """アタッカーを生成
@@ -106,7 +101,7 @@ class Agent(Robot):
             angularDamping=1.0  # 回転の減衰を大きくする
         )
 
-        x, y = Agent.vector_calculations(angle_deg=angle_deg, magnitude=magnitude)
+        x, y = self.cal.vector_calculations(angle_deg=angle_deg, magnitude=magnitude)
 
         # 円柱の中心に力を加える
         p.applyExternalForce(
@@ -124,7 +119,12 @@ class Agent(Robot):
         )
 
 class Defender(object):
-    pass
+    def __init__(self, create_position):
+        super().__init__()
+        self.cp = create_position
+        self.start_pos = [1+self.cp[0], 0.5+self.cp[1], 0.1+self.cp[2]]
+        self.base_position = self.start_pos
+
 
 
 if __name__ == '__main__':
