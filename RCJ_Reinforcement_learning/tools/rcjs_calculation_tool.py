@@ -7,13 +7,6 @@ class CalculationTool(object):
         pass
 
     @staticmethod
-    def is_ball_touch(attacker_id, ball_id, count):
-        is_touch = p.getContactPoints(ball_id, attacker_id)
-        if is_touch:
-            count = 0
-        return count
-
-    @staticmethod
     def angle_calculation_id(a_id, b_id):
         a_pos, _ = p.getBasePositionAndOrientation(a_id)
         b_pos, _ = p.getBasePositionAndOrientation(b_id)

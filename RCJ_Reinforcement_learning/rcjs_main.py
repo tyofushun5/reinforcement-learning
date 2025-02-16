@@ -12,12 +12,12 @@ def main():
 
     model = PPO("MlpPolicy",
                 env,
-                device="cuda",
+                device="cpu",
                 verbose=1,
                 n_steps=4096,
                 batch_size=256)
 
-    model.learn(total_timesteps=1000000)
+    model.learn(total_timesteps=10000000)
 
     model.save(os.path.join(save_dir, "RCJ_ppo_model"))
 

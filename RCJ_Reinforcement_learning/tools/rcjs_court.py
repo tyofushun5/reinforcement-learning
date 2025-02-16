@@ -32,9 +32,19 @@ class Court(object):
                        [1.21, 2.32, 0.05]]
         self.from_positions = []
         self.to_positions = []
+        self.__my_goal_line_idx = 6
+        self.__enemy_goal_line_idx = 7
         self.hit_ids = []
         self.my_goal_position = [0.91+self.cp[0], 0.11+self.cp[1], 0.05]
         self.enemy_goal_position = [0.91+self.cp[0], 2.32+self.cp[1], 0.05]
+
+    @property
+    def my_goal_line_idx(self):
+        return self.__my_goal_line_idx
+
+    @property
+    def enemy_goal_line_idx(self):
+        return self.__enemy_goal_line_idx
 
     def create_court(self):
         """STLファイルから衝突形状を作成"""

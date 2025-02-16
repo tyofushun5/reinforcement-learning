@@ -1,3 +1,4 @@
+import random
 import gymnasium as gym
 import numpy as np
 import pybullet as p
@@ -29,7 +30,8 @@ class Environment(gym.Env):
         self.unit = Unit()
         self.cal = CalculationTool()
         self.reward_cal = FirstRewardCalculation()
-        self.unit.create_unit(self.cp)
+        self.agent_random_pos = [1+self.cp[0], 0.5+self.cp[1], 0.1+self.cp[2]]
+        self.unit.create_unit(self.cp, self.agent_random_pos)
 
         self.hit_ids = []
         self.max_steps = 25000
@@ -38,45 +40,46 @@ class Environment(gym.Env):
         self.reset()
 
     def step(self, action):
-        self.unit.action(robot_id=self.unit.attacker_id,
+        terminated = False
+        truncated = False
+        info = {}
+        self.unit.action(robot_id=self.unit.agent_id,
                          angle_deg=action,
-                         magnitude=6.0)
+                         magnitude=7.0)
         for _ in range(10):
             p.stepSimulation()
 
-        pos, _ = p.getBasePositionAndOrientation(self.unit.attacker_id)
+        pos, _ = p.getBasePositionAndOrientation(self.unit.agent_id)
         fixed_ori = p.getQuaternionFromEuler([0, 0, 0])
-        p.resetBasePositionAndOrientation(self.unit.attacker_id, pos, fixed_ori)
+        p.resetBasePositionAndOrientation(self.unit.agent_id,
+                                          pos,
+                                          fixed_ori)
 
         self.step_count += 1
 
-        attacker_pos, _ = p.getBasePositionAndOrientation(self.unit.attacker_id)
+        agent_pos, _ = p.getBasePositionAndOrientation(self.unit.agent_id)
 
-        ball_angle = self.cal.angle_calculation_id(self.unit.attacker_id,
+        ball_angle = self.cal.angle_calculation_id(self.unit.agent_id,
                                                      self.unit.ball_id)
 
-        enemy_goal_angle = self.cal.angle_calculation_pos(attacker_pos,
+        enemy_goal_angle = self.cal.angle_calculation_pos(agent_pos,
                                                            self.unit.court.enemy_goal_position)
 
-        my_goal_angle = self.cal.angle_calculation_pos(attacker_pos,
+        my_goal_angle = self.cal.angle_calculation_pos(agent_pos,
                                                         self.unit.court.my_goal_position)
 
         self.hit_ids = self.unit.detection_line()
         reward = self.reward_cal.reward_calculation(self.hit_ids,
-                                              self.unit.attacker_id,
+                                              self.unit.agent_id,
                                               self.unit.ball_id,
                                               self.step_count)
 
-        # self.step_count = self.unit.is_ball_touch(self.unit.attacker_id,
-        #                                           self.unit.ball_id,
-        #                                           self.step_count)
+        observation = np.array([ball_angle,
+                                enemy_goal_angle,
+                                my_goal_angle],
+                               dtype=np.float32)
 
-        observation = np.array([ball_angle, enemy_goal_angle, my_goal_angle], dtype=np.float32)
-
-        terminated = False
-        truncated = False
-        info = {}
-        if self.unit.is_goal:
+        if self.reward_cal.is_goal:
             terminated = True
 
         if self.step_count >= self.max_steps:
@@ -84,6 +87,7 @@ class Environment(gym.Env):
 
         #print(my_goal_angle, enemy_goal_angle, reward)
         #print(observation)
+        #print(reward)
         return observation, reward, terminated, truncated, info
 
     def reset(self, seed=None, options=None):
@@ -92,11 +96,14 @@ class Environment(gym.Env):
         p.setGravity(0, 0, -9.81)
         p.loadSDF("stadium.sdf")
 
-        self.unit = Unit()
-        self.unit.create_unit(self.cp)
-
         if seed is not None:
             np.random.seed(seed)
+
+        self.agent_random_pos[0] = random.uniform(0.5, 1.5)
+        self.agent_random_pos[1] = random.uniform(0.5, 1)
+
+        self.unit = Unit()
+        self.unit.create_unit(self.cp, self.agent_random_pos)
 
         self.step_count = 0
         initial_obs = np.array([0.0, 0.0, 0.0], dtype=np.float32)

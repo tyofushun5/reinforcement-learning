@@ -5,6 +5,7 @@ import pybullet as p
 
 
 class Robot(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
     def __init__(self):
         pass
 
@@ -22,9 +23,10 @@ class Agent(Robot):
         super().__init__()
         self.cp = create_position
         self.start_pos = [1+self.cp[0], 0.5+self.cp[1], 0.1+self.cp[2]]
+        self.base_position = self.start_pos
 
     @staticmethod
-    def vector_calculations(angle_deg, magnitude=1.0):
+    def vector_calculations(angle_deg, magnitude=7.0):
         angle_rad = math.radians(angle_deg)
         vector_x = magnitude * math.cos(angle_rad)
         vector_y = magnitude * math.sin(angle_rad)
@@ -55,8 +57,10 @@ class Agent(Robot):
     #      )
     #      return attacker_id
 
-    def create(self):
-        # 円柱のパラメータ設定
+    def create(self, base_position=None):
+        if base_position is None:
+            self.base_position = self.start_pos
+
         radius = 0.11  # 半径（メートル）
         height = 0.11  # 高さ（メートル）
         mass = 1.4  # 質量（キログラム）
@@ -73,7 +77,7 @@ class Agent(Robot):
             shapeType=p.GEOM_CYLINDER,
             radius=radius,
             length=height,
-            rgbaColor=[0.2, 0.2, 0.2, 1]  # 赤色（R, G, B, α）
+            rgbaColor=[0.2, 0.2, 0.2, 1]
         )
 
         # 円柱のマルチボディを作成
@@ -81,11 +85,11 @@ class Agent(Robot):
             baseMass=mass,
             baseCollisionShapeIndex=collisionShapeId,
             baseVisualShapeIndex=visualShapeId,
-            basePosition=self.start_pos
+            basePosition=base_position
         )
         return attacker_id
 
-    def action(self, robot_id, angle_deg=0, magnitude=6.0):
+    def action(self, robot_id, angle_deg=0, magnitude=7.0):
         """ロボットを動かす関数"""
 
         # Dynamics情報を取得
