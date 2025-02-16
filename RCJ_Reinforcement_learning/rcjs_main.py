@@ -17,7 +17,7 @@ def main():
                 verbose=1,
                 n_steps=4096,
                 batch_size=256,
-                gamma=0.01)
+                gamma=0.99)
 
     model.learn(total_timesteps=10000000)
 

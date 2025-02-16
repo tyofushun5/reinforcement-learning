@@ -8,6 +8,7 @@ import pybullet as p
 import pybullet_data
 
 class Court(object):
+
     def __init__(self, create_position):
         self.cp = create_position
         self.num_lines = 8

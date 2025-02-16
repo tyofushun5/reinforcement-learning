@@ -6,6 +6,7 @@ from RCJ_Reinforcement_learning.tools.rcjs_court import Court
 from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTool
 
 class RewardCalculation(metaclass=abc.ABCMeta):
+
     def __init__(self):
         self.my_goal_line_idx = 6
         self.enemy_goal_line_idx = 7
