@@ -76,13 +76,13 @@ class Agent(Robot):
         )
 
         # 円柱のマルチボディを作成
-        attacker_id = p.createMultiBody(
+        agent_id = p.createMultiBody(
             baseMass=mass,
             baseCollisionShapeIndex=collisionShapeId,
             baseVisualShapeIndex=visualShapeId,
             basePosition=base_position
         )
-        return attacker_id
+        return agent_id
 
     def action(self, robot_id, angle_deg=0, magnitude=7.0):
         """ロボットを動かす関数"""
@@ -124,7 +124,6 @@ class Defender(object):
         self.cp = create_position
         self.start_pos = [1+self.cp[0], 0.5+self.cp[1], 0.1+self.cp[2]]
         self.base_position = self.start_pos
-
 
 
 if __name__ == '__main__':

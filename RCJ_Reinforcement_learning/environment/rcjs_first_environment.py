@@ -11,7 +11,7 @@ from RCJ_Reinforcement_learning.tools.rcjs_reward_calculation import FirstReward
 
 
 class Environment(gym.Env):
-    def __init__(self):
+    def __init__(self, create_position, max_epoch):
         super().__init__()
         # PyBulletの初期化
         self.physicsClient = p.connect(p.GUI)
@@ -23,18 +23,15 @@ class Environment(gym.Env):
                                             high=np.inf,
                                             shape=(3,),
                                             dtype=np.float32)
-
-        self.cp = [0, 0, 0]
-        self.detection_interval = 0
-
         self.unit = Unit()
         self.cal = CalculationTool()
         self.reward_cal = FirstRewardCalculation()
+        self.cp = create_position
         self.agent_random_pos = [1+self.cp[0], 0.5+self.cp[1], 0.1+self.cp[2]]
         self.unit.create_unit(self.cp, self.agent_random_pos)
 
         self.hit_ids = []
-        self.max_steps = 25000
+        self.max_steps = max_epoch
         self.step_count = 0
 
         self.reset()
