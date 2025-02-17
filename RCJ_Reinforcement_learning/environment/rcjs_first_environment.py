@@ -1,4 +1,5 @@
 import random
+
 import gymnasium as gym
 import numpy as np
 import pybullet as p
@@ -11,10 +12,10 @@ from RCJ_Reinforcement_learning.tools.rcjs_reward_calculation import FirstReward
 
 
 class Environment(gym.Env):
-    def __init__(self, create_position, max_epoch, GUI=False):
+    def __init__(self, create_position, max_steps, gui=False):
         super().__init__()
         # PyBulletの初期化
-        if GUI:
+        if gui:
             self.physicsClient = p.connect(p.GUI)
         else:
             self.physicsClient = p.connect(p.DIRECT)
@@ -34,7 +35,7 @@ class Environment(gym.Env):
         self.unit.create_unit(self.cp, self.agent_random_pos)
 
         self.hit_ids = []
-        self.max_steps = max_epoch
+        self.max_steps = max_steps
         self.step_count = 0
 
         self.reset()

@@ -9,15 +9,15 @@ save_dir = "model"
 os.makedirs(save_dir, exist_ok=True)
 
 def main():
-    env = Environment(max_epoch=20000,
+    env = Environment(max_steps=15000,
                       create_position=[0, 0, 0],
-                      GUI=False)
+                      gui=True)
 
     model = PPO("MlpPolicy",
                 env,
-                device="cuda",
+                device="cpu",
                 verbose=1,
-                n_epochs=20,
+                n_epochs=10,
                 n_steps=4096,
                 batch_size=4096,
                 gamma=0.99)
