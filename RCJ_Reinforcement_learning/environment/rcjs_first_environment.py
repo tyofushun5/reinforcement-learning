@@ -11,10 +11,13 @@ from RCJ_Reinforcement_learning.tools.rcjs_reward_calculation import FirstReward
 
 
 class Environment(gym.Env):
-    def __init__(self, create_position, max_epoch):
+    def __init__(self, create_position, max_epoch, GUI=False):
         super().__init__()
         # PyBulletの初期化
-        self.physicsClient = p.connect(p.GUI)
+        if GUI:
+            self.physicsClient = p.connect(p.GUI)
+        else:
+            self.physicsClient = p.connect(p.DIRECT)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.loadSDF("stadium.sdf")
         p.setGravity(0, 0, -9.81)
