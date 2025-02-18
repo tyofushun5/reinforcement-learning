@@ -1,5 +1,3 @@
-import abc
-
 import pybullet as p
 
 from RCJ_Reinforcement_learning.tools.rcjs_court import Court
@@ -47,14 +45,14 @@ class FirstRewardCalculation(object):
             self.is_goal = True
         for i in range(len(hit_ids)):
             if hit_ids[i] == agent_id:
-                reward -= 0.3
+                reward -= 0.5
         angle = self.cal.angle_calculation_id(agent_id, ball_id)
         if angle<=90 or angle>=270:
-            reward += 0.1
-        else:
-            reward -= 0.1
-        if angle<=45 or angle>=315:
             reward += 0.2
+        else:
+            reward -= 0.2
+        if angle<=45 or angle>=315:
+            reward += 0.3
         return reward
 
 class SecondRewardCalculation(object):

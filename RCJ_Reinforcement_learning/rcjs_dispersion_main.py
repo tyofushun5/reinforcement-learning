@@ -16,19 +16,19 @@ def main():
     save_dir = "model"
     os.makedirs(save_dir, exist_ok=True)
 
-    num_envs = 20
+    num_envs = 12
     env = SubprocVecEnv([make_env() for _ in range(num_envs)])
 
     model = PPO("MlpPolicy",
                 env,
                 device="cpu",
                 verbose=1,
-                n_epochs=10,
-                n_steps=4096,
-                batch_size=4096,
+                n_epochs=15,
+                n_steps=2048,
+                batch_size=12288,
                 gamma=0.99)
 
-    model.learn(total_timesteps=2500000)
+    model.learn(total_timesteps=1000000)
     model.save(os.path.join(save_dir, "RCJ_ppo_model_v1"))
 
     env.close()

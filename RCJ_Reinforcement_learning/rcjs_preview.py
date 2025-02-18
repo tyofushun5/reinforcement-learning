@@ -15,16 +15,15 @@ def main():
     loaded_model = PPO.load(model_path, env=preview_env)
 
     # テストの実行
-    obs, info = preview_env.reset()
+    observation, info = preview_env.reset()
     while True:
-        action, _states = loaded_model.predict(obs, deterministic=True)
+        action, _states = loaded_model.predict(observation, deterministic=True)
         observation, reward, terminated, truncated, info = preview_env.step(action)
         if terminated:
             preview_env.reset()
             break
 
     preview_env.close()
-
 
 if __name__ == "__main__":
     main()
