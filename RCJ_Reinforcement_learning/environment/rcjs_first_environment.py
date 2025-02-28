@@ -11,8 +11,8 @@ from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTo
 from RCJ_Reinforcement_learning.tools.rcjs_reward_calculation import FirstRewardCalculation
 
 
-class Environment(gym.Env):
-    def __init__(self, create_position, max_steps, gui=False):
+class FirstEnvironment(gym.Env):
+    def __init__(self, create_position, max_steps, magnitude, gui=False):
         super().__init__()
         # PyBulletの初期化
         if gui:
@@ -36,6 +36,7 @@ class Environment(gym.Env):
 
         self.hit_ids = []
         self.max_steps = max_steps
+        self.magnitude = magnitude
         self.step_count = 0
 
         self.reset()
@@ -44,9 +45,10 @@ class Environment(gym.Env):
         terminated = False
         truncated = False
         info = {}
+        self.step_count += 1
         self.unit.action(robot_id=self.unit.agent_id,
                          angle_deg=action,
-                         magnitude=7.0)
+                         magnitude=self.magnitude)
         for _ in range(10):
             p.stepSimulation()
 
@@ -55,8 +57,6 @@ class Environment(gym.Env):
         p.resetBasePositionAndOrientation(self.unit.agent_id,
                                           pos,
                                           fixed_ori)
-
-        self.step_count += 1
 
         agent_pos, _ = p.getBasePositionAndOrientation(self.unit.agent_id)
 

@@ -1,6 +1,5 @@
 import pybullet as p
 
-from RCJ_Reinforcement_learning.tools.rcjs_court import Court
 from RCJ_Reinforcement_learning.tools.rcjs_calculation_tool import CalculationTool
 
 class FirstRewardCalculation(object):
@@ -37,7 +36,9 @@ class FirstRewardCalculation(object):
 
         is_touch = p.getContactPoints(ball_id, agent_id)
         if is_touch:
-            reward += 7
+            reward += 6
+        else:
+            reward -= 0.1
         if hit_ids[self.my_goal_line_idx] == ball_id:
             reward -= 10
         if hit_ids[self.enemy_goal_line_idx] == ball_id:
@@ -45,14 +46,14 @@ class FirstRewardCalculation(object):
             self.is_goal = True
         for i in range(len(hit_ids)):
             if hit_ids[i] == agent_id:
-                reward -= 0.5
+                reward -= 0.1
         angle = self.cal.angle_calculation_id(agent_id, ball_id)
         if angle<=90 or angle>=270:
             reward += 0.2
         else:
             reward -= 0.2
         if angle<=45 or angle>=315:
-            reward += 0.3
+            reward += 0.4
         return reward
 
 class SecondRewardCalculation(object):

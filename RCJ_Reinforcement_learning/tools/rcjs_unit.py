@@ -1,5 +1,3 @@
-import math
-
 from RCJ_Reinforcement_learning.tools.rcjs_court import Court
 from RCJ_Reinforcement_learning.tools.rcjs_robot import Agent
 

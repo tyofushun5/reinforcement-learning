@@ -1,25 +1,25 @@
 import os
 
 from stable_baselines3 import PPO
-
-from RCJ_Reinforcement_learning.environment.rcjs_first_environment import Environment
+from sb3_contrib import RecurrentPPO
+from RCJ_Reinforcement_learning.environment.rcjs_first_environment import FirstEnvironment
 
 save_dir = "model"
 
 def main():
-    preview_env = Environment(max_steps=10000,
-                           create_position=[0, 0, 0],
-                              gui=True)
+    preview_env = FirstEnvironment(max_steps=1000000,
+                                   create_position=[0, 0, 0],
+                                   magnitude=10.0,
+                                   gui=True)
 
     model_path = os.path.join(save_dir, "RCJ_ppo_model_v1")
-    loaded_model = PPO.load(model_path, env=preview_env)
+    loaded_model = RecurrentPPO.load(model_path, env=preview_env)
 
-    # テストの実行
     observation, info = preview_env.reset()
     while True:
         action, _states = loaded_model.predict(observation, deterministic=True)
         observation, reward, terminated, truncated, info = preview_env.step(action)
-        if terminated:
+        if terminated or truncated:
             preview_env.reset()
             break
 
