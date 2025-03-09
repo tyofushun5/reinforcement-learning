@@ -38,22 +38,22 @@ class FirstRewardCalculation(object):
         if is_touch:
             reward += 6
         else:
-            reward -= 0.1
+            reward -= 0.3
         if hit_ids[self.my_goal_line_idx] == ball_id:
             reward -= 10
         if hit_ids[self.enemy_goal_line_idx] == ball_id:
             reward += 10
             self.is_goal = True
-        for i in range(len(hit_ids)):
-            if hit_ids[i] == agent_id:
-                reward -= 0.1
+        # for i in range(len(hit_ids)):
+        #     if hit_ids[i] == agent_id:
+        #         reward -= 0.1
         angle = self.cal.angle_calculation_id(agent_id, ball_id)
         if angle<=90 or angle>=270:
             reward += 0.2
         else:
             reward -= 0.2
         if angle<=45 or angle>=315:
-            reward += 0.4
+            reward += 0.5
         return reward
 
 class SecondRewardCalculation(object):

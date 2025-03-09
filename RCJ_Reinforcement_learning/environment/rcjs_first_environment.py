@@ -19,6 +19,9 @@ class FirstEnvironment(gym.Env):
             self.physicsClient = p.connect(p.GUI)
         else:
             self.physicsClient = p.connect(p.DIRECT)
+
+        p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+        p.resetDebugVisualizerCamera(cameraDistance=1.5, cameraYaw=50, cameraPitch=-35, cameraTargetPosition=[0, 0, 0])
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.loadSDF("stadium.sdf")
         p.setGravity(0, 0, -9.81)
