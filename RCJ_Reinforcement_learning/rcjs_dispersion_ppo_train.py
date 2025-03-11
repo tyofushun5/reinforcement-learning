@@ -39,7 +39,7 @@ def main():
                 batch_size=128*12,
                 gamma=0.99)
 
-    model.learn(total_timesteps=50000000, callback=checkpoint_callback)
+    model.learn(total_timesteps=100000000, callback=checkpoint_callback)
     model.save(os.path.join(save_dir, "RCJ_ppo_model_v2"))
 
     env.close()

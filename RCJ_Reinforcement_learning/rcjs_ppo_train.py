@@ -18,7 +18,7 @@ def main():
     model = RecurrentPPO(
         "MlpLstmPolicy",
         env,
-        device="cpu",
+        device="cuda",
         verbose=1,
         n_epochs=10,
         n_steps=4096,
