@@ -8,7 +8,7 @@ from stable_baselines3.common.callbacks import CheckpointCallback
 
 
 checkpoint_callback = CheckpointCallback(save_freq=100000,
-                                         save_path='./RCJ_Reinforcement_learning/model',
+                                         save_path='model',
                                          name_prefix='RCJ_ppo_model',
                                          save_replay_buffer=True,
                                          save_vecnormalize=True)

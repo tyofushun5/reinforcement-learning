@@ -4,7 +4,7 @@ import onnx
 from stable_baselines3 import PPO
 
 # 1. Stable-Baselines3 で事前学習済みモデルをロード
-model_path = os.path.join("model", "RCJ_ppo_model.zip")
+model_path = os.path.join("model", "RCJ_ppo_model_v1.zip")
 ppo_model = PPO.load(model_path)
 
 # 2. ポリシー部分を抽出 (PyTorch ベース)
