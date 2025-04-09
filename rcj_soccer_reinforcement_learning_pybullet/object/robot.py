@@ -13,7 +13,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 stl_dir = os.path.join(script_dir, 'stl')
 
 robot_collision_path = os.path.join(stl_dir, 'robot_v2_collision.stl')
-robot_visual_path = os.path.join(stl_dir, 'robot_v2_visual.stl')
+robot_visual_path = os.path.join(stl_dir, 'robot_v2_collision.stl')
 
 
 class Robot(metaclass=abc.ABCMeta):
